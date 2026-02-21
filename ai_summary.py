@@ -19,7 +19,7 @@ def _load_cold_outreach_skill() -> str:
         'skills/cold-outreach/SKILL.md',
         '.agent/skill/cold-outreach/SKILL.md',
     ]
-    
+
     for path in skill_paths:
         if os.path.exists(path):
             try:
@@ -29,9 +29,44 @@ def _load_cold_outreach_skill() -> str:
                     return content
             except Exception as e:
                 print(f"[AI] Failed to load skill from {path}: {e}")
-    
+
     print("[AI] No cold-outreach skill file found, using defaults")
     return ""
+
+
+# Shared humanizer rules injected into all email generation prompts.
+# Distilled from the humanizer skill (based on Wikipedia's "Signs of AI writing").
+HUMANIZER_PROMPT = """
+ANTI-AI WRITING RULES (MANDATORY — apply to all generated email copy):
+
+You must write like a real human. AI-sounding emails get ignored. Follow these rules strictly:
+
+BANNED WORDS/PHRASES — never use these:
+- additionally, crucial, delve, enhance, foster, garner, landscape (abstract),
+  pivotal, showcase, tapestry, testament, underscore, vibrant, intricate,
+  groundbreaking, renowned, nestled, stunning, breathtaking, enduring, valuable
+- "serves as", "stands as", "marks a" — just use "is"
+- "in order to" — just use "to"
+- "it is important to note that" — delete it
+- "I hope this helps", "certainly!", "great question", "exciting times"
+- "not just X, it's Y" or "not only X, but also Y" — pick one and say it
+
+PATTERNS TO AVOID:
+- Rule of three: don't force ideas into groups of three
+- Em dash overuse: use commas or periods instead
+- Significance inflation: don't puff up importance with "pivotal moment", "broader trends", "setting the stage"
+- Superficial -ing phrases: don't tack on "highlighting...", "ensuring...", "reflecting..."
+- Synonym cycling: don't rotate synonyms to avoid repetition (protagonist/main character/central figure)
+- Generic positive conclusions: no "the future looks bright" or "exciting times ahead"
+- Filler hedging: no "could potentially possibly", "it could be argued that"
+
+WHAT GOOD EMAIL SOUNDS LIKE:
+- Vary sentence length. Short ones. Then a longer one that takes its time.
+- Be specific, not vague. Reference real things about the recipient.
+- Use simple words: "is", "has", "does" — not "serves as", "boasts", "features"
+- Sound like you're writing to one person, not broadcasting
+- A little personality goes a long way — be direct, even slightly informal
+"""
 
 
 def _get_cold_email_instructions() -> str:
@@ -202,6 +237,8 @@ CONTEXT:
 - Libraries Found: {', '.join(libraries_found) if libraries_found else 'None'}
 
 {_get_cold_email_instructions()}
+
+{HUMANIZER_PROMPT}
 
 Return ONLY valid JSON with this format:
 {{"subject": "...", "body": "..."}}
