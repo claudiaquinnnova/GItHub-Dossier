@@ -2,7 +2,7 @@
 {% block title %}LinkedIn Prospector - Lead Machine{% endblock %}
 {% block breadcrumb %}{% endblock %}
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/linkedin_prospector.css') }}?v=4">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/linkedin_prospector.css') }}?v={{ asset_version('css/linkedin_prospector.css') }}">
 {% endblock %}
 {% block content %}
 <div class="lp-container">
@@ -16,6 +16,7 @@
   <div class="lp-input-zone" id="input-zone">
     <div class="lp-upload-zone" id="upload-zone">
       <input type="file" id="file-input" accept="image/*">
+      <svg class="lp-collapsed-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
       <svg class="lp-upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
         <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
         <polyline points="21 15 16 10 5 21"/>
