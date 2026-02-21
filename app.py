@@ -51,7 +51,7 @@ from monitors.webscraper_utils import (
 from monitors.scanner import deep_scan_generator
 from monitors.discovery import search_github_orgs, resolve_org_fast, discover_companies_via_ai
 from monitors.web_analyzer import analyze_website, analyze_website_technical
-from ai_summary import generate_analysis
+from ai_summary import generate_analysis, HUMANIZER_PROMPT
 from pdf_generator import generate_report_pdf
 from agentmail_client import is_agentmail_configured, send_email_draft
 from sheets_client import is_sheets_configured, get_sheet_info
@@ -1944,6 +1944,8 @@ Rules:
 - Sound like a human, not a robot
 - Use their first name
 - Emails 2 and 4 are SHORT follow-ups (they thread under the previous subject)
+
+{HUMANIZER_PROMPT}
 
 Return ONLY valid JSON with no markdown formatting:
 {{
@@ -5820,6 +5822,8 @@ Rules:
 - End with a simple CTA: "Worth a quick chat?"
 - No fluff, no generic templates, no "I hope this email finds you well"
 - Sound like a human, not a robot
+
+{HUMANIZER_PROMPT}
 
 Return ONLY valid JSON with no markdown:
 {{
